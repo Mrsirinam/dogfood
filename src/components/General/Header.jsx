@@ -1,6 +1,6 @@
 import Logo from "./Logo";
 
-const Header = ({user, setUser}) => {
+const Header = ({user, setUser, setModalActive}) => {
 	
     const logOut = (e) => {
         e.preventDefault();
@@ -9,8 +9,9 @@ const Header = ({user, setUser}) => {
     }
     const logIn = (e) => {
         e.preventDefault();
-				setUser("lk-band");
-        localStorage.setItem("rockUser", "lk-band");
+				// setUser("lk-band");
+        // localStorage.setItem("rockUser", "lk-band");
+				setModalActive(true);
     }
     return <header>
         <Logo/>

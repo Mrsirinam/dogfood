@@ -2,6 +2,7 @@ import { useState } from "react";
 import Promo from "./components/Promo/Promo"; // Promo.jsx
 import Card from "./components/Card"; // index.jsx
 import {Header, Footer} from "./components/General";
+import 	Modal from "./components/Modal"
 import cardsData from "./assets/data"; // data.json
 import Search from "./components/Search";
 
@@ -25,8 +26,14 @@ while(n--) {
 const App = () => {
 		const [goods, setGoods] = useState(cardsData);
     const [user, setUser] = useState(localStorage.getItem("rockUser"));
-    return <div>
-        <Header user={user} setUser={setUser}/>
+		const [modalActive, setModalActive] = useState(false);
+    return (
+		<>
+        <Header 
+				user={user} 
+				setUser={setUser}
+				setModalActive={setModalActive}
+				/>
         <div className="container">
             {/* <Card 
                 img={cardsData[0].pictures}
@@ -47,7 +54,12 @@ const App = () => {
             */}
         </div>
         <Footer/>
-    </div>
+				<Modal 
+				active={modalActive} 
+				setActive={setModalActive}
+				/>
+    </>
+		)
 }
 
 export default App;
