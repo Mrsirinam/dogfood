@@ -1,4 +1,6 @@
 import Logo from "./Logo";
+import { Link } from "react-router-dom";
+import Draft from "../../pages/Draft";
 
 const Footer = () => {
     return <footer>
@@ -7,9 +9,10 @@ const Footer = () => {
             <div>©{new Date().getFullYear()}</div>
         </div>
         <div className="footer__cell footer__menu">
-            <a href="">Каталог</a>
-            <a href="">Избранное</a>
-            <a href="">Корзина</a>
+            <Link to="">Каталог</Link>
+            <Link to="">Избранное</Link>
+            <Link to="">Корзина</Link>
+				
         </div>
     </footer>
 }

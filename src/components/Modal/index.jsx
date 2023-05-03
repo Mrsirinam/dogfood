@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./style.css";
 
-const Modal = ({active, setActive}) => {
+const Modal = ({active, setActive, setUser}) => {
 	const [auth, setAuth] = useState(true);
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
@@ -69,12 +69,14 @@ const sendForm = async (e) => {
 				localStorage.setItem("rockUser", dataLog.data.name);
 				clearForm();
 				setActive(false);
+				setUser(dataLog.data.name);
 				}
 			} else {
 				if (!data.err) {
 				localStorage.setItem("rockUser", data.data.name)
 				clearForm();
 				setActive(false)
+				setUser (data.data.name)
 				}
 			}
 		
