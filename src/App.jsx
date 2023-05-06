@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom"
 
 // компоненты (кусочки кода, которые используются многократно)
@@ -13,7 +13,43 @@ import Profile from "./pages/Profile";
 
 const App = () => {
     const [user, setUser] = useState(localStorage.getItem("rockUser"));
+		const [token, setToken] = useState(localStorage.getItem("rockToken"));
+		//товары из БД
+		const [serverGoods, setServerGoods] = useState([]);
+		//товары для поиска и фильтрации
+		const [goods, setGoods] = useState(serverGoods);
+
 		const [modalActive, setModalActive] = useState(false);
+
+		//useEffect  срабатывает когда компонент создался или перерисовался
+		useEffect(() => {
+			if (token) {
+			fetch("https://api.react-learning.ru/products",	{
+				headers: {
+						"Authorization": `Bearer ${token}`
+			}
+		})
+						.then(res => res.json())		
+						.then(data => {
+							console.log(data);
+						})
+					}
+				}, [token])
+
+				useEffect(() => {
+					setGoods(serverGoods);
+				}, [serverGoods]);
+			
+			useEffect(() => {
+				if (user) {
+				setToken(localStorage.getItem("rockToken"));
+			} else {
+				setToken("")
+			}
+				console.log("u", user);
+				console.log("t", token);
+		}, [user])
+
     return (
 		<>
         <Header 

@@ -12,6 +12,7 @@ const Footer = () => {
             <Link to="">Каталог</Link>
             <Link to="">Избранное</Link>
             <Link to="">Корзина</Link>
+						<Link to="/draft">Черновик</Link>
 				
         </div>
     </footer>

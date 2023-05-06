@@ -67,13 +67,18 @@ const sendForm = async (e) => {
 				let dataLog = await resLog.json()
 				if (!dataLog.err) {
 				localStorage.setItem("rockUser", dataLog.data.name);
+				localStorage.setItem("rockToken", dataLog.token);
+				localStorage.setItem("rockId", dataLog.data._id);
+
 				clearForm();
 				setActive(false);
 				setUser(dataLog.data.name);
 				}
 			} else {
 				if (!data.err) {
-				localStorage.setItem("rockUser", data.data.name)
+				localStorage.setItem("rockUser", data.data.name);
+				localStorage.setItem("rockToken", data.token);
+				localStorage.setItem("rockId", data.data._id);
 				clearForm();
 				setActive(false)
 				setUser (data.data.name)
