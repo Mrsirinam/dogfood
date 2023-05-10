@@ -10,6 +10,7 @@ import Draft from "./pages/Draft";
 import Main from "./pages/Main";
 import Catalog from "./pages/Catalog";
 import Profile from "./pages/Profile";
+import Product from "./pages/Product";
 
 const App = () => {
     const [user, setUser] = useState(localStorage.getItem("rockUser"));
@@ -26,12 +27,15 @@ const App = () => {
 			if (token) {
 			fetch("https://api.react-learning.ru/products",	{
 				headers: {
-						"Authorization": `Bearer ${token}`
+						"Authorization": `Bearer ${localStorage.getItem("rockToken")}`
 			}
 		})
 						.then(res => res.json())		
 						.then(data => {
+							if (!data.err) {
 							console.log(data);
+							setServerGoods(data.products)
+							}
 						})
 					}
 				}, [token])
@@ -57,14 +61,16 @@ const App = () => {
 				setModalActive={setModalActive}
 				/>
        <main>	
-				<Search arr={[]} upd={() => {}}/>
+				<Search arr={serverGoods} upd={setGoods}/>
 			
 					<Routes>
 							<Route path="/" element={<Main/>} />
-							<Route path="/catalog"  element={<Catalog/>} />
+							<Route path="/catalog"  element={<Catalog goods={goods}/>} />
 							<Route path="/draft"  element={<Draft/>} />
 							<Route path="/profile"  element={
-									<Profile user={user} setUser={setUser} color={"yellow"}/>} />
+									<Profile user={user} setUser={setUser} color={"yellow"}/>
+							} />
+							<Route path="/product/:id" element={<Product token ={token}/>}/>
 					</Routes>
 			 </main>
         <Footer/>
