@@ -6,6 +6,7 @@ const Product = ({ token }) => {
   const [product, setProduct] = useState({});
   const { id } = useParams();
 
+	
   /*
 	product?.name 
 	=

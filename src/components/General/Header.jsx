@@ -6,9 +6,17 @@ import {
 					Cart4, 
 					PersonSquare, 
 					BoxArrowInRight 
-} from "react-bootstrap-icons"
+} from "react-bootstrap-icons";
+import { useEffect, useState } from "react";
 
-const Header = ({user, setModalActive}) => {
+const Header = ({user, setModalActive, serverGoods}) => {
+	const [likeCnt, setLikeCnt] = useState(0);
+	const [cartCnt, setCartCnt] = useState(0);
+	useEffect(() => {
+		//фильтруем только те товары, у которых в лайках есть id нашего пользователя - id берем из ls, ибо мы про него забыли
+		setLikeCnt(serverGoods.filter(el => el.likes.includes(localStorage.getItem("rockId"))).length)
+	}, [serverGoods]);
+
 	const navigate  = useNavigate();
     const logIn = (e) => {
         e.preventDefault();
@@ -26,18 +34,20 @@ const Header = ({user, setModalActive}) => {
 								<Link to="/catalog" title="Каталог">
 										<Folder2/>
 								</Link>
-                <Link to="/" title="Корзина">
+                <Link to="/favorites" title="Избранное" className="badge-el">
+									<Star/>
+									<span className="badge-item">{likeCnt}</span>
+								</Link>
+								<Link to="/" title="Корзина" className="badge-el">
 										<Cart4/>
+										<span className="badge-item">{cartCnt}</span>
 								</Link>
                 <Link to="/profile" title="Профиль">
 										<PersonSquare/>
 								</Link>
-                <Link to="/" title="Избранное">
-										<Star/>
-								</Link>
-              
+                      
             </>}
-            {!user && <a href="" onClick={logIn}title="Войти">
+            {!user && <a href="" onClick={logIn} title="Войти">
 							<BoxArrowInRight/>
 							</a>}
         </nav>
