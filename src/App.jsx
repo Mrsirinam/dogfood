@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
+
 import { Routes, Route } from "react-router-dom"
+
+//подключаем контекст
+import Ctx from "./context";
+
+
 
 // компоненты (кусочки кода, которые используются многократно)
 import { Header, Footer } from "./components/General";
@@ -14,6 +20,9 @@ import Product from "./pages/Product";
 import Favorites from "./pages/Favorites";
 
 const App = () => {
+	// api новости
+	// let key = "7f7747c7f46444109d662bcda004bd8d"
+	"https://newsapi.org/v2/everything?q=собака&sources=lenta&apiKey=7f7747c7f46444109d662bcda004bd8d"
 	const [user, setUser] = useState(localStorage.getItem("rockUser"));
 	const [token, setToken] = useState(localStorage.getItem("rockToken"));
 	const [userId, setUserId] = useState(localStorage.getItem("rockId"))
@@ -21,6 +30,17 @@ const App = () => {
 	const [serverGoods, setServerGoods] = useState([]);
 	//товары для поиска и фильтрации
 	const [goods, setGoods] = useState(serverGoods);
+	//получаем новости
+	useEffect(() => {
+		fetch("https://newsapi.org/v2/everything?q=собака&sources=lenta&apiKey=7f7747c7f46444109d662bcda004bd8d")
+			.then(res => res.json())
+			.then(data => {
+				console.log(data);
+				setNews(data.articles)
+			})
+	}, [])
+
+	const [news, setNews] = useState([]);
 
 	const [modalActive, setModalActive] = useState(false);
 
@@ -50,6 +70,7 @@ const App = () => {
 	}, [serverGoods]);
 
 	useEffect(() => {
+
 		if (user) {
 			setToken(localStorage.getItem("rockToken"));
 			setUserId(localStorage.getItem("rockId"))
@@ -61,19 +82,23 @@ const App = () => {
 	}, [user])
 
 	return (
-		<>
+		<Ctx.Provider value={{
+			goods: goods,
+			setGoods,
+			news
+		}}>
 			<Header
 				user={user}
 				setModalActive={setModalActive}
 				serverGoods={serverGoods}
 			/>
 			<main>
-				<Search arr={serverGoods} upd={setGoods} />
+				<Search arr={serverGoods} />
 
 				<Routes>
 					<Route path="/" element={<Main />} />
 					<Route path="/catalog" element={<Catalog
-						goods={goods}
+
 						//когда мы ставим лайк на оовар - его нужно обновить в общем массиве с товарами, иначе лайк поставится только в карточке, но после изменения страницы(переходе между страницами), мы его больше не увидим 
 						setServerGoods={setServerGoods}
 					/>} />
@@ -95,9 +120,9 @@ const App = () => {
 				setActive={setModalActive}
 				setUser={setUser}
 			/>
+		</Ctx.Provider>
 
 
-		</>
 	)
 }
 
