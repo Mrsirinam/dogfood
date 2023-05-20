@@ -8,7 +8,17 @@
 	text-align: center;
 	position: relative;
 	align-content: space-between;
+
 }
+
+.card__img2 {
+	height: 100px;
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
+	display: block;
+}
+
 .card__img {
 	height: 100px;
 	justify-self: center;

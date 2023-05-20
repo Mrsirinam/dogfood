@@ -4,10 +4,10 @@ import Ctx from "../../context"
 import "./style.css"
 
 //arr -список товаров из json-файла
-const Search = ({ arr, upd }) => {
+const Search = ({ arr }) => {
 	// let text = "Corn";
-	const { setGoods } = useContext(Ctx)
-	const [text, setText] = useState("");
+	const { setGoods, text, setText } = useContext(Ctx)
+	// const [text, setText] = useState("");
 	const [quantity, setQuantity] = useState(arr.length);
 
 	/*
@@ -15,7 +15,7 @@ const Search = ({ arr, upd }) => {
 
 	Единственный аргумент useState - значение по умолчанию
 	*/
-	const [count, updateCount] = useState(0);
+	// const [count, updateCount] = useState(0);
 	useEffect(() => {
 		if (text) {
 			let result = arr.filter(el => new RegExp(text, "i").test(el.name))
