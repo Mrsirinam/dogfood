@@ -36,3 +36,7 @@ main {
 .container .search-block {
 	grid-column-end: span 4;
 }
+
+.container.bs {
+	display: block;
+}

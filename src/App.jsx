@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-
 import { Routes, Route } from "react-router-dom"
 
 //подключаем контекст
@@ -18,6 +17,7 @@ import Catalog from "./pages/Catalog";
 import Profile from "./pages/Profile";
 import Product from "./pages/Product";
 import Favorites from "./pages/Favorites";
+import Add from "./pages/AddProduct"
 
 const App = () => {
 	// api новости
@@ -107,6 +107,7 @@ const App = () => {
 						//когда мы ставим лайк на оовар - его нужно обновить в общем массиве с товарами, иначе лайк поставится только в карточке, но после изменения страницы(переходе между страницами), мы его больше не увидим 
 						setServerGoods={setServerGoods}
 					/>} />
+					<Route path="/add" element={<Add />} />
 					<Route path="/favorites" element={<Favorites
 						goods={goods}
 						userId={userId}

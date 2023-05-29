@@ -1,15 +1,16 @@
 import Logo from "./Logo";
 import { Link, useNavigate } from "react-router-dom";
-import { 
-					Folder2, 
-					Star, 
-					Cart4, 
-					PersonSquare, 
-					BoxArrowInRight 
+import {
+	Folder2,
+	Star,
+	Cart4,
+	PersonSquare,
+	BoxArrowInRight,
+	PlusSquare
 } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
 
-const Header = ({user, setModalActive, serverGoods}) => {
+const Header = ({ user, setModalActive, serverGoods }) => {
 	const [likeCnt, setLikeCnt] = useState(0);
 	const [cartCnt, setCartCnt] = useState(0);
 	useEffect(() => {
@@ -17,41 +18,43 @@ const Header = ({user, setModalActive, serverGoods}) => {
 		setLikeCnt(serverGoods.filter(el => el.likes.includes(localStorage.getItem("rockId"))).length)
 	}, [serverGoods]);
 
-	const navigate  = useNavigate();
-    const logIn = (e) => {
-        e.preventDefault();
-				// setUser("lk-band");
-        // localStorage.setItem("rockUser", "lk-band");
-				setModalActive(true);
-				navigate("/profile")
-    }
-    return <header>
-        <Logo/>
-        <div className="search"></div>
-        <nav className="header__menu">
-            {/* Если пользователь === true */}
-            {user && <>
-								<Link to="/catalog" title="Каталог">
-										<Folder2/>
-								</Link>
-                <Link to="/favorites" title="Избранное" className="badge-el">
-									<Star/>
-									<span className="badge-item">{likeCnt}</span>
-								</Link>
-								<Link to="/" title="Корзина" className="badge-el">
-										<Cart4/>
-										<span className="badge-item">{cartCnt}</span>
-								</Link>
-                <Link to="/profile" title="Профиль">
-										<PersonSquare/>
-								</Link>
-                      
-            </>}
-            {!user && <a href="" onClick={logIn} title="Войти">
-							<BoxArrowInRight/>
-							</a>}
-        </nav>
-    </header>
+	const navigate = useNavigate();
+	const logIn = (e) => {
+		e.preventDefault();
+		// setUser("lk-band");
+		// localStorage.setItem("rockUser", "lk-band");
+		setModalActive(true);
+		navigate("/profile")
+	}
+	return <header>
+		<Logo />
+		<div className="search"></div>
+		<nav className="header__menu">
+			{/* Если пользователь === true */}
+			{user && <>
+				<Link to="/add" title="Добавить товар" className="badge-el"><PlusSquare /> </Link>
+
+				<Link to="/catalog" title="Каталог">
+					<Folder2 />
+				</Link>
+				<Link to="/favorites" title="Избранное" className="badge-el">
+					<Star />
+					<span className="badge-item">{likeCnt}</span>
+				</Link>
+				<Link to="/" title="Корзина" className="badge-el">
+					<Cart4 />
+					<span className="badge-item">{cartCnt}</span>
+				</Link>
+				<Link to="/profile" title="Профиль">
+					<PersonSquare />
+				</Link>
+
+			</>}
+			{!user && <a href="" onClick={logIn} title="Войти">
+				<BoxArrowInRight />
+			</a>}
+		</nav>
+	</header>
 }
 
 export default Header;
