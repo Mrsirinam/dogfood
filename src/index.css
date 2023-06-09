@@ -1,6 +1,6 @@
 body {
-  background-color: darkslateblue;
-  color: #fff;
+	background-color: #fff;
+  color: #000;
 	margin: 0 ;
 	font-family: sans-serif;
 }
@@ -39,4 +39,52 @@ main {
 
 .container.bs {
 	display: block;
+}
+
+table {
+	width: 100%;
+	background-color: white;
+	color: #222;
+	border-radius: 1rem;
+	overflow: hidden;
+}
+
+td {
+	padding: .6 rem 1rem;
+}
+
+td:first-child {
+	text-align: center;
+}
+
+thead {
+	text-align: center;
+	font-weight: bold;
+
+}
+
+tbody td {
+	border-bottom: 1px solid silver;
+}
+
+tfoot td {
+	vertical-align: bottom;
+	line-height: 1;
+}
+
+tfoot td:first-child {
+	text-align: right;
+	text-transform: uppercase;
+	vertical-align: bottom;
+}
+
+tfoot td:last-child {
+font-size: 2em;
+font-weight: bold;
+}
+
+tfoot del {
+	padding-left: 10px;
+	font-size: .8em;
+	color: silver;
 }

@@ -31,7 +31,7 @@ const News = () => {
 
 	return <>
 		<div>
-			<h2>Новости Lenta.ru</h2>
+			<h2>Новости</h2>
 			<div className="news-block">
 				{data.slice(0, 5).map((el, i) => <img
 					key={i}

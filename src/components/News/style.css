@@ -17,6 +17,11 @@
 	transform:  translate(calc(100% + 20px), 0);
 	animation: slideLast 2000ms linear infinite;
 }
+
+h2 {
+	padding-bottom: 30px;
+}
+
 @keyframes slide {
 	from {
 			transform: translate(0,0);

@@ -47,7 +47,7 @@ const Search = ({ arr }) => {
 		<div className="search-block">
 			<input type="search" value={text}
 				onChange={searchByText} />
-			<button onClick={click}>Кнопочка</button>
+			<button onClick={click}>Найти</button>
 			<hr />
 			{/* <div>{text}, {n}, {count}</div> */}
 			<div>По вашему запросу «{text}» найдено {quantity} подходящих товаров</div>

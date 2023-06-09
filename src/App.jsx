@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom"
 
+
 //подключаем контекст
 import Ctx from "./context";
+//подключаем Api
+import Api from "./api";
 
 
 
@@ -10,6 +13,7 @@ import Ctx from "./context";
 import { Header, Footer } from "./components/General";
 import Modal from "./components/Modal"
 import Search from "./components/Search";
+import Basket from "./pages/Basket";
 // страницы - отдельный компонент со своим набором компонентов
 import Draft from "./pages/Draft";
 import Main from "./pages/Main";
@@ -33,6 +37,23 @@ const App = () => {
 	const [serverGoods, setServerGoods] = useState([]);
 	//товары для поиска и фильтрации
 	const [goods, setGoods] = useState(serverGoods);
+
+	const [news, setNews] = useState([]);
+	const [api, setApi] = useState(new Api(token));
+
+	//basket from LS
+	let bStore = localStorage.getItem("rockBasket");
+	// if (bStore && bStore[0] === "[" && bStore[bStore.length - 1] === "]") {
+	if (bStore) {
+		bStore = JSON.parse(bStore);
+	} else {
+		bStore = [];
+	}
+
+	const [basket, setBasket] = useState(bStore);
+
+
+
 	//получаем новости
 	useEffect(() => {
 		fetch("https://newsapi.org/v2/everything?q=собака&sources=lenta&apiKey=7f7747c7f46444109d662bcda004bd8d")
@@ -43,19 +64,26 @@ const App = () => {
 			})
 	}, [])
 
-	const [news, setNews] = useState([]);
 
 	const [modalActive, setModalActive] = useState(false);
 
 	//useEffect  срабатывает когда компонент создался или перерисовался
 	useEffect(() => {
-		if (token) {
-			fetch("https://api.react-learning.ru/products", {
-				headers: {
-					"Authorization": `Bearer ${localStorage.getItem("rockToken")}`
-				}
-			})
-				.then(res => res.json())
+		console.log(token, "aaaaaa");
+
+		setApi(new Api(token))
+	}, [token])
+
+
+	//перезаписываем даныые в LS каждый раз, когда происходят действия с корзиной
+	useEffect(() => {
+		localStorage.setItem("rockBasket", JSON.stringify(basket))
+	}, [basket])
+
+	useEffect(() => {
+		console.log(token, "fffff");
+		if (api.token) {
+			api.getProduct()
 				.then(data => {
 					if (!data.err) {
 						console.log(data);
@@ -63,7 +91,7 @@ const App = () => {
 					}
 				})
 		}
-	}, [token])
+	}, [api.token])
 
 	useEffect(() => {
 		if (!goods.length) {
@@ -93,7 +121,10 @@ const App = () => {
 			text,
 			setText,
 			userId,
-			token
+			token,
+			api,
+			basket,
+			setBasket
 		}}>
 			<Header
 				user={user}
@@ -121,6 +152,8 @@ const App = () => {
 						<Profile user={user} setUser={setUser} color={"yellow"} />
 					} />
 					<Route path="/product/:id" element={<Product token={token} />} />
+					<Route path="/basket" element={<Basket />} />
+
 				</Routes>
 			</main>
 			<Footer />
